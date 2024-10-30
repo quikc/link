@@ -10,26 +10,28 @@
             const params = new URLSearchParams(window.location.search);
             const url = params.get('url');
 
-            // Create a new blank page
-            const newWindow = window.open('about:blank', '_blank');
+            if (url) {
+                // Create a new blank page
+                const newWindow = window.open('about:blank', '_blank');
 
-            // Write the iframe to the new page
-            newWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <title>Iframe Page</title>
-                    <style>
-                        body { margin: 0; }
-                        iframe { width: 100%; height: 100%; border: none; }
-                    </style>
-                </head>
-                <body>
-                    <iframe src="${url}" allowfullscreen></iframe>
-                </body>
-                </html>
-            `);
-            newWindow.document.close(); // Close the document stream to render the content
+                // Write the iframe to the new page
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <title>Iframe Page</title>
+                        <style>
+                            body { margin: 0; }
+                            iframe { width: 100%; height: 100%; border: none; }
+                        </style>
+                    </head>
+                    <body>
+                        <iframe src="${encodeURI(url)}" allowfullscreen></iframe>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close(); // Close the document stream to render the content
+            }
 
             // Close the current window
             window.close();
